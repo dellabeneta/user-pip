@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: pip
-          image: dellabeneta/pip:v3
+          image: dellabeneta/pip:dev
           ports:
             - containerPort: 8080
           resources:
