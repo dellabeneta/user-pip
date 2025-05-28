@@ -9,6 +9,7 @@ on:
       - "templates/**"
       - "main.go"
       - "Dockerfile"
+      - "k3s/deployment.yaml"
 
   pull_request:
     branches: [ main ]
@@ -16,6 +17,7 @@ on:
       - "templates/**"
       - "main.go"
       - "Dockerfile"
+      - "k3s/deployment.yaml"
     
 jobs:
   build-and-push:
