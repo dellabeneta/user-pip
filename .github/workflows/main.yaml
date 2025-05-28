@@ -85,6 +85,7 @@ jobs:
         uses: azure/k8s-deploy@v4
         with:
           action: deploy
+          namespace: pip
           manifests: |
             k3s/namespace.yaml
             k3s/service.yaml
