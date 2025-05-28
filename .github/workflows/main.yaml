@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch: {}
+
+  push:
+    branches: [ main ]
+    paths:
+      - "templates/**"
+      - "main.go"
+
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "templates/**"
+      - "main.go"
+    
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    - name: Build Go project
+      run: |
+        echo "Simulando build do projeto Go..."
+        mkdir -p bin
+        touch bin/app # Artefato binário fictício
+        echo "Build completo! Binário gerado em bin/app"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: go-binary
+        path: bin/app
+
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: go-binary
+        path: bin
+
+    - name: Configure K8s
+      run: |
+        echo "Simulando conexão com cluster k3s"
+        echo "KUBECONFIG: ${{ secrets.KUBECONFIG }}" # Usará segredo do GitHub
+        echo "Conexão bem-sucedida!"
+
+    - name: Deploy to Kubernetes
+      run: |
+        NEW_VERSION="v${{ github.run_number }}"
+        echo "Fazendo deploy da aplicação: dellabeneta/pip:$NEW_VERSION"
+        echo "kubectl apply -f deployment.yaml" # Comando fictício
+        echo "Deploy da versão $NEW_VERSION concluído!"
