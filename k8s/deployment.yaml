@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pip-deployment
+  namespace: pip
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pip
+  template:
+    metadata:
+      labels:
+        app: pip
+    spec:
+      containers:
+        - name: pip
+          image: dellabeneta/pip:v3
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

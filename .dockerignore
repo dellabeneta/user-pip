@@ -1,0 +1,18 @@
+# Arquivos locais
+*.log
+*.tmp
+
+# Diretórios Go
+bin/
+pkg/
+
+# Git
+.git
+.gitignore
+
+# Editor
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
