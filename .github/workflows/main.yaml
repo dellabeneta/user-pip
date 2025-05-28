@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   workflow_dispatch: {}
-
+  
   push:
     branches: [ main ]
     paths:
@@ -22,7 +22,7 @@ on:
       - "k3s/deployment.yaml"
       - "k3s/service.yaml"
       - "k3s/namespace.yaml"
-    
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -41,12 +41,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Construir e enviar imagem Docker
-        run: |
-          NEW_VERSION="v${{ github.run_number }}"
-          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/pip:$NEW_VERSION"
-          
-          docker build -t $IMAGE_NAME .
-          docker push $IMAGE_NAME
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/pip:v${{ github.run_number }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,17 +55,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configurar acesso ao cluster K3S
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          chmod 600 ~/.kube/config
+        uses: azure/k8s-set-context@v4
+        with:
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Atualizar imagem no deployment
+        uses: mikepenz/action-k8s-setimage@v1
+        with:
+          deployment: k3s/deployment.yaml
+          container: pip
+          image: ghcr.io/${{ github.repository_owner }}/pip:v${{ github.run_number }}
 
       - name: Realizar deploy no Kubernetes (K3S)
-        run: |
-          NEW_VERSION="v${{ github.run_number }}"
-          echo "Nova versão da aplicação: $NEW_VERSION"
-
-          # Atualiza a imagem no deployment
-          sed -i "s|image: .*|image: ghcr.io/${{ github.repository_owner }}/pip:$NEW_VERSION|g" k3s/deployment.yaml
-          kubectl apply -f k3s/deployment.yaml
-          
+        uses: azure/k8s-deploy@v4
+        with:
+          manifests: |
+            k3s/deployment.yaml
+            k3s/service.yaml
+            k3s/namespace.yaml
