@@ -1,7 +1,7 @@
 name: CI/CD Pipeline
 
 on:
-  workflow_dispatch: {} # Permite execução manual pelo GitHub
+  workflow_dispatch: {}
 
   push:
     branches: [ main ]
@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Fazer Login no DockeHub
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Construir e enviar imagem Docker
         run: |
