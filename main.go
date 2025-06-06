@@ -13,7 +13,7 @@ import (
 //go:embed templates/index.html
 var templates embed.FS
 
-//go:embed static/favicon.png
+//go:embed templates/favicon.png
 var favicon []byte
 
 type PageData struct {
@@ -44,7 +44,7 @@ func main() {
         log.Fatal("Erro ao carregar template embedado: ", err)
     }
 
-    http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+    http.HandleFunc("templates/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Set("Content-Type", "image/png")
         w.WriteHeader(http.StatusOK)
         _, err := w.Write(favicon)
