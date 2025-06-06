@@ -44,7 +44,7 @@ func main() {
         log.Fatal("Erro ao carregar template embedado: ", err)
     }
 
-    http.HandleFunc("templates/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+    http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Set("Content-Type", "image/png")
         w.WriteHeader(http.StatusOK)
         _, err := w.Write(favicon)
