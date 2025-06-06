@@ -18,7 +18,6 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /app
 
 COPY --from=builder /app/pip .
-COPY --from=builder /app/templates ./templates
 
 EXPOSE 8080
 
