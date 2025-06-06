@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seu IP</title>
+    <link rel="icon" href="favicon2.png" type="image/png">
+
     <style>
         body {
             background-color: #cccccc;
             color: #272727;
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif; 
             margin-top: 50px;
         }
         h1 {
@@ -33,10 +35,12 @@
         }
     </style>
 </head>
+
 <body>
-    <h1>Seu IP</h1>    
+    <h1>Seu IP</h1>
+    
     <div class="ip">{{.IP}}</div>
     <div class="time">Requisição em: {{.Time}}</div>
     <div class="server">POD: {{.ServerName}}</div>
 </body>
-</html>
+
