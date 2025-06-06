@@ -44,7 +44,6 @@ func main() {
         log.Fatal("Erro ao carregar template embedado: ", err)
     }
 
-    // Serve o favicon embedado
     http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Set("Content-Type", "image/png")
         w.WriteHeader(http.StatusOK)
@@ -64,3 +63,22 @@ func main() {
 
         data := PageData{
             ServerName: serverName,
+            IP:         getClientIP(r),
+            Time:       time.Now().Format("2006-01-02 15:04:05"),
+        }
+
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            log.Printf("Erro ao executar template: %v", err)
+            http.Error(w, "Erro ao renderizar o template", http.StatusInternalServerError)
+            return
+        }
+
+        log.Println("Resposta enviada com sucesso")
+    })
+
+    err = http.ListenAndServe(":8080", nil)
+    if err != nil {
+        log.Fatal("Erro ao iniciar o servidor: ", err)
+    }
+}
