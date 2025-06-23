@@ -69,17 +69,25 @@ O serviço pode ser configurado através das seguintes variáveis de ambiente:
 ### Estrutura do Projeto
 
 ```
+della@ubuntu:~/projetos/user-pip$ tree
 .
 ├── Dockerfile
 ├── go.mod
-├── k8s
+├── k3s
 │   ├── deployment.yaml
 │   ├── namespace.yaml
 │   └── service.yaml
+├── LICENSE
 ├── main.go
 ├── nuke.sh
-├── templates
-│   └── index.html
+├── pip.png
+├── README.md
+└── templates
+    ├── favicon.ico
+    └── index.html
+
+3 directories, 12 files
+della@ubuntu:~/projetos/user-pip$
 ```
 
 ### Scripts Úteis
