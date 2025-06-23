@@ -1,71 +1,96 @@
-# User-PIP
+## User-PIP
 
-Este projeto é uma aplicação web simples em Go que exibe o endereço IP do usuário, a hora da requisição e o nome do pod (quando executado em Kubernetes).
+[![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat-square&logo=go)](https://golang.org)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://hub.docker.com/)
 
-## Funcionalidades
+Uma aplicação web simples em Go para exibir o endereço IP do usuário, a hora da requisição e o nome do pod/servidor (útil para ambientes Kubernetes).
 
-- Mostra o IP real do visitante (considerando proxies).
-- Exibe a data e hora da requisição.
-- Mostra o nome do pod (útil para testes em ambientes Kubernetes).
-- Interface simples em HTML.
+### Aviso Importante
 
-## Como executar localmente
+**Este projeto é destinado a fins de teste, demonstração e aprendizado.** Não utilize para coleta de dados sensíveis em produção sem as devidas adequações de segurança.
 
-1. **Pré-requisitos:**  
-   - [Go](https://golang.org/dl/) 1.24+
-   - [Docker](https://www.docker.com/) (opcional)
+### Funcionalidades
 
-2. **Executando diretamente com Go:**
-   ```sh
-   go run main.go
-   ```
-   Acesse [http://localhost:8080](http://localhost:8080) no navegador.
+- Exibe o IP real do visitante (considerando proxies)
+- Mostra a data e hora da requisição
+- Exibe o nome do pod/servidor
+- Interface web responsiva e minimalista
+- Pronto para Docker e Kubernetes
 
-3. **Executando com Docker:**
-   ```sh
-   docker build -t user-pip .
-   docker run -p 8080:8080 user-pip
-   ```
+### Começando
 
-## Deploy no Kubernetes
+**Pré-requisitos**
+- Go 1.24+  
+- Docker (opcional)  
+- Kubernetes (opcional)
 
-1. Crie o namespace:
-   ```sh
-   kubectl apply -f k8s/namespace.yaml
-   ```
+**Instalação Local**
+```bash
+git clone https://github.com/seu-usuario/user-pip.git
+cd user-pip
+go run main.go
+```
+A aplicação estará disponível em `http://localhost:8080`
 
-2. Faça o deploy:
-   ```sh
-   kubectl apply -f k8s/deployment.yaml
-   kubectl apply -f k8s/service.yaml
-   ```
+**Usando Docker**
+```bash
+docker build -t user-pip .
+docker run -p 8080:8080 user-pip
+```
 
-3. Acesse via NodePort em `http://<NODE_IP>:30080`
+**Deploy no Kubernetes**
+```bash
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
+Acesse via NodePort em `http://<NODE_IP>:30080`
 
-## Estrutura do Projeto
+### Tecnologias
+
+- **Backend**: Go 1.24+
+- **Frontend**: HTML5, CSS3 (inline)
+- **Container**: Docker Alpine
+- **Orquestração**: Kubernetes
+
+### Como Funciona
+
+O serviço exibe o IP do visitante, a data/hora da requisição e o nome do pod/servidor, útil para troubleshooting e testes em ambientes distribuídos.
+
+### Configuração
+
+O serviço pode ser configurado através das seguintes variáveis de ambiente:
+
+| Variável | Descrição         | Padrão |
+|----------|-------------------|--------|
+| PORT     | Porta do servidor | 8080   |
+
+### Estrutura do Projeto
 
 ```
 .
-├── main.go
-├── go.mod
 ├── Dockerfile
+├── go.mod
+├── k8s
+│   ├── deployment.yaml
+│   ├── namespace.yaml
+│   └── service.yaml
+├── main.go
 ├── nuke.sh
-├── templates/
+├── templates
 │   └── index.html
-└── k8s/
-    ├── deployment.yaml
-    ├── namespace.yaml
-    └── service.yaml
 ```
 
-## Limpeza de recursos Docker
+### Scripts Úteis
 
-Use o script `nuke.sh` para remover todos os containers, imagens, volumes e redes Docker (use com cuidado):
+**nuke.sh**: Script para limpeza completa do Docker (containers, imagens, volumes e redes)
 
-```sh
+```bash
+chmod +x nuke.sh
 ./nuke.sh
 ```
 
-## Licença
+### Licença
 
-MIT
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais
