@@ -1,8 +1,7 @@
 ## User-PIP
 
-[![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat-square&logo=go)](https://golang.org)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://hub.docker.com/)
+![Pipeline](https://github.com/dellabeneta/user-pip/actions/workflows/main.yaml/badge.svg)
+![GHCR version](https://img.shields.io/badge/ContainerVersion-v44-blue)
 
 Uma aplicação web simples em Go para exibir o endereço IP do usuário, a hora da requisição e o nome do pod/servidor (útil para ambientes Kubernetes).
 
