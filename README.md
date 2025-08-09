@@ -1,7 +1,6 @@
 ## User-PIP
 
 ![Pipeline](https://github.com/dellabeneta/user-pip/actions/workflows/main.yaml/badge.svg)
-![GHCR version](https://img.shields.io/badge/ContainerVersion-v44-blue)
 
 Uma aplicação web simples em Go para exibir o endereço IP do usuário, a hora da requisição e o nome do pod/servidor (útil para ambientes Kubernetes).
 
