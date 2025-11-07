@@ -66,5 +66,5 @@ jobs:
           NEW_VERSION="v${{ github.run_number }}"
           echo "Nova versão da aplicação: $NEW_VERSION"
           sed -i "s|image: .*|image: ghcr.io/${{ github.repository_owner }}/pip:$NEW_VERSION|g" k3s/deployment.yaml
-          kubectl apply -f k3s/deployment.yaml --validate=false
+          kubectl apply -f k3s/deployment.yaml
           
